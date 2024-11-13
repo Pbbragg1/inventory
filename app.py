@@ -12,7 +12,7 @@ def menu():
                     a.) Add a new product to the database
                     b.) Create a backup of the entire database''')
         choice = input(">")
-        if choice in ["v", "a", "b", "V", "A", "B"]:
+        if choice in ["v","a","b","V","A","B"]:
             return choice
         else:
             print("Please try again, remember to choose from v, a, or b")
@@ -40,11 +40,12 @@ def add_csv():
                 new_inventory = inventory(product_name = name, product_price = price, product_quantity = quantity, date_updated = date)
                 session.add(new_inventory)
         session.commit()
-
-
+def app():
+    app_running = True
+    while app_running:
+        choice = menu()
 if __name__ == "__main__":
     Base.metadata.create_all(engine)
-
     add_csv()
     
     for product in session.query(inventory):
