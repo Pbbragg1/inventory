@@ -1,3 +1,4 @@
+#import all the required modules
 from model import (Base, session, inventory, engine)
 import csv
 import datetime
@@ -10,9 +11,10 @@ def menu():
         print('''Please select an option:
                     v.) View a single products inventory
                     a.) Add a new product to the database
-                    b.) Create a backup of the entire database''')
+                    b.) Create a backup of the entire database
+                    e.) Exit the program''')
         choice = input(">")
-        if choice in ["v","a","b","V","A","B"]:
+        if choice in ["v","a","b","e"]:
             return choice
         else:
             print("Please try again, remember to choose from v, a, or b")
@@ -71,6 +73,24 @@ def add_csv():
                 new_inventory = inventory(product_name = name, product_price = price, product_quantity = quantity, date_updated = date)
                 session.add(new_inventory)
         session.commit()
+def generate_backup():
+
+    with open("backup.csv", "w", newline='') as csvfile:
+        productwriter = csv.writer(csvfile)
+
+        productwriter.writerow(['product_id',
+                                'product_name', 
+                                'product_price', 
+                                'product_quantity', 
+                                'date_updated'])
+        
+        for product in session.query(inventory).order_by(inventory.product_id):
+            productwriter.writerow([product.product_id,
+                             product.product_name,
+                             product.product_price,
+                             product.product_quantity,
+                             product.date_updated])
+    print("The data has been backed-up")
 def app():
     app_running = True
     while app_running:
@@ -109,10 +129,16 @@ def app():
             the_product = session.query(inventory).filter(product.product_id == id_choice)
             print(f'''
                   product name: {product.product_name}
-                  product price: {product.product_price / 100}
+                  product price: ${product.product_price / 100}
                   product quantity: {product.product_quantity}
                   last date updated: {product.date_updated}''')
             input("press enter when you would like to return to the main menu > ")
+        elif choice == "b":
+            generate_backup()
+            input("press enter to continue to home page")
+            time.sleep(1.5)
+        elif choice == "e":
+            break
 if __name__ == "__main__":
     Base.metadata.create_all(engine)
     add_csv()
