@@ -1,3 +1,4 @@
+# imports the modules needed
 from sqlalchemy import (create_engine, Column, Integer, String, Date)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -8,8 +9,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
-class inventory(Base):
-    __tablename__ = "inventory"
+#creates an inventory
+class Product(Base):
+    __tablename__ = "product"
 
     product_id = Column(Integer, primary_key=True)
     product_name = Column("Product", String)
