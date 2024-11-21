@@ -11,7 +11,7 @@ Base = declarative_base()
 
 #creates an inventory
 class Product(Base):
-    __tablename__ = "product"
+    __tablename__ = "products"
 
     product_id = Column(Integer, primary_key=True)
     product_name = Column("Product", String)

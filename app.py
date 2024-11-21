@@ -132,7 +132,7 @@ def app():
                 id_choice = clean_id(id_choice, id_options)
                 if type(id_choice) == int:
                     id_error = False
-            the_product = session.query(Product).filter(product.product_id==id_choice).first()
+            the_product = session.query(Product).filter(Product.product_id==id_choice).first()
             print(f'''
                   product name: {product.product_name}
                   product price: ${product.product_price / 100}
