@@ -134,10 +134,10 @@ def app():
                     id_error = False
             the_product = session.query(Product).filter(Product.product_id==id_choice).first()
             print(f'''
-                  product name: {product.product_name}
-                  product price: ${product.product_price / 100}
-                  product quantity: {product.product_quantity}
-                  last date updated: {product.date_updated}''')
+                  product name: {the_product.product_name}
+                  product price: ${the_product.product_price / 100}
+                  product quantity: {the_product.product_quantity}
+                  last date updated: {the_product.date_updated}''')
             input("press enter when you would like to return to the main menu > ")
         elif choice == "b":
             #create a backup for the data so if it is lost it can be recovered
